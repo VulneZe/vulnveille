@@ -1,0 +1,49 @@
+# Environment variables with secrets
+.env
+.env.local
+.env.*.local
+
+# Docker Compose override (should be renamed manually)
+docker-compose.override.yml
+
+# Data directories - never version these
+data/
+data/**/*
+
+# Ansible inventory with real hosts
+ansible/inventory.ini
+ansible/inventory.*.ini
+!ansible/inventory.example.ini
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# OS files
+.DS_Store
+Thumbs.db
+*~
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Ansible retry files
+*.retry
+
+# Generated files
+ansible/group_vars/veille.yml
+!ansible/group_vars/veille.yml.example

@@ -1,0 +1,76 @@
+---
+# Tâches du rôle hardening : durcissement de sécurité du système
+
+- name: Désactiver le login root SSH
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin'
+    line: 'PermitRootLogin no'
+    state: present
+  notify: restart ssh
+
+- name: Désactiver l'authentification par mot de passe SSH
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    state: present
+  notify: restart ssh
+
+# Règles UFW de base
+- name: Installer UFW si non présent
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+
+- name: Configurer UFW - politique par défaut
+  ansible.builtin.ufw:
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
+  loop:
+    - { direction: incoming, policy: deny }
+    - { direction: outgoing, policy: allow }
+
+- name: Autoriser SSH
+  ansible.builtin.ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+
+- name: Autoriser HTTP et HTTPS
+  ansible.builtin.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - '80'
+    - '443'
+
+- name: Activer UFW
+  ansible.builtin.ufw:
+    state: enabled
+
+# Règles agressives (commentées par défaut pour éviter de casser l'accès)
+# - name: Limiter SSH à des IP spécifiques
+#   ansible.builtin.ufw:
+#     rule: limit
+#     port: '22'
+#     proto: tcp
+#     from_ip: "{{ item }}"
+#   loop: "{{ allowed_ips }}"
+
+# - name: Limiter HTTP/HTTPS à des IP spécifiques
+#   ansible.builtin.ufw:
+#     rule: allow
+#     port: "{{ item.port }}"
+#     proto: tcp
+#     from_ip: "{{ item.ip }}"
+#   loop:
+#     - { port: '80', ip: '192.168.1.0/24' }
+#     - { port: '443', ip: '192.168.1.0/24' }
+
+handlers:
+  - name: restart ssh
+    ansible.builtin.systemd:
+      name: ssh
+      state: restarted

@@ -1,0 +1,5 @@
+---
+# Variables par défaut pour le rôle nginx
+
+install_dir: /opt/veille-techno-cyber-interne
+nginx_ssl_enabled: false

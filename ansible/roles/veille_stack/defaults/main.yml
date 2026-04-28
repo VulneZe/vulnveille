@@ -1,0 +1,6 @@
+---
+# Variables par défaut pour le rôle veille_stack
+
+install_dir: /opt/veille-techno-cyber-interne
+service_user: veille
+service_group: veille

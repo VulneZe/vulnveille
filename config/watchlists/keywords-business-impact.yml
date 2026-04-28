@@ -1,0 +1,77 @@
+# Keywords Business Impact - Mots-clés pour l'impact métier
+# Ces mots-clés indiquent des changements avec impact sur l'organisation
+
+# Fin de vie et fin de support
+- "end of support"
+- "end of life"
+- EOS
+- EOL
+- "support ends"
+- "no longer supported"
+- "deprecated"
+- deprecation
+- deprecated
+- "will be deprecated"
+- "deprecation notice"
+
+# Migration requise
+- "migration required"
+- "migration needed"
+- "must migrate"
+- "upgrade required"
+- "upgrade needed"
+- "mandatory upgrade"
+- "forced upgrade"
+
+# Breaking changes
+- "breaking change"
+- "breaking changes"
+- "incompatible change"
+- "backward incompatible"
+- "API change"
+- "API breaking"
+
+# Changements de licence
+- "licensing change"
+- "license change"
+- "pricing change"
+- "price increase"
+- "new pricing"
+- "price adjustment"
+- "subscription change"
+- "commercial change"
+
+# Roadmap et futures versions
+- roadmap
+- "future release"
+- "upcoming features"
+- "planned features"
+- "feature removal"
+- "feature deprecation"
+- "service retirement"
+- "service discontinuation"
+
+# Mots-clés français
+- fin de support
+- fin de vie
+- obsolète
+- déprécié
+- sera déprécié
+- fin de vie annoncée
+- fin de support annoncée
+- migration obligatoire
+- migration requise
+- mise à jour obligatoire
+- changement de licence
+- changement tarifaire
+- augmentation de prix
+- nouveau tarif
+- changement cassant
+- rupture de compatibilité
+- retrait de fonctionnalité
+- arrêt du service
+- discontinuation du service
+- feuille de route
+- roadmap
+- version future
+- fonctionnalités à venir

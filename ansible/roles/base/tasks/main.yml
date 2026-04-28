@@ -1,0 +1,52 @@
+---
+# Tâches du rôle base : installation des paquets système et création de l'utilisateur
+
+- name: Mettre à jour le cache apt
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Installer les paquets système utiles
+  ansible.builtin.apt:
+    name:
+      - curl
+      - git
+      - wget
+      - ca-certificates
+      - gnupg
+      - lsb-release
+      - vim
+      - htop
+      - net-tools
+    state: present
+
+- name: Créer l'utilisateur système veille
+  ansible.builtin.user:
+    name: "{{ service_user }}"
+    system: yes
+    shell: /bin/bash
+    home: "{{ install_dir }}"
+    create_home: no
+
+- name: Créer le répertoire d'installation
+  ansible.builtin.file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: "{{ service_user }}"
+    group: "{{ service_group }}"
+    mode: '0750'
+
+- name: Créer les sous-répertoires data
+  ansible.builtin.file:
+    path: "{{ install_dir }}/data/{{ item }}"
+    state: directory
+    owner: "{{ service_user }}"
+    group: "{{ service_group }}"
+    mode: '0750'
+  loop:
+    - freshrss
+    - n8n
+    - changedetection
+    - wallabag
+    - postgres
+    - backups

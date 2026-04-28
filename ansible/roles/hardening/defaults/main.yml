@@ -1,0 +1,7 @@
+---
+# Variables par défaut pour le rôle hardening
+
+# Liste des IP autorisées pour les règles agressives
+# allowed_ips:
+#   - "192.168.1.0/24"
+#   - "10.0.0.0/8"

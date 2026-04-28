@@ -1,0 +1,449 @@
+# Stack Watchlist - Technologies utilisées dans l'infrastructure
+# Ce fichier contient la liste des technologies à surveiller pour les vulnérabilités
+# et les mises à jour importantes
+
+- name: Windows Server
+  category: Operating System
+  vendor: Microsoft
+  used_in_company: unknown  # TODO: Mettre à jour
+  criticality: high
+  owner: TBD  # TODO: Mettre à jour
+  keywords:
+    - Windows Server
+    - "Windows Server 2019"
+    - "Windows Server 2022"
+    - "KB"
+    - cumulative update
+  rss_sources:
+    - https://www.microsoft.com/en-us/security/blog/rss/
+  pages_to_watch:
+    - https://learn.microsoft.com/en-us/windows-server/get-started/windows-server-release-info
+  notes: Serveurs Windows critiques pour l'infrastructure
+
+- name: Active Directory
+  category: Identity
+  vendor: Microsoft
+  used_in_company: unknown
+  criticality: critical
+  owner: TBD
+  keywords:
+    - Active Directory
+    - AD DS
+    - domain controller
+    - Kerberos
+    - LDAP
+  rss_sources:
+    - https://www.microsoft.com/en-us/security/blog/rss/
+  pages_to_watch: []
+  notes: Service d'identité critique
+
+- name: Microsoft 365
+  category: Productivity
+  vendor: Microsoft
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Microsoft 365
+    - Office 365
+    - Exchange Online
+    - SharePoint Online
+  rss_sources:
+    - https://www.microsoft.com/en-us/security/blog/rss/
+    - https://techcommunity.microsoft.com/t5/microsoft-365-blog/bg-p/Microsoft365Blog
+  pages_to_watch:
+    - https://www.microsoft.com/en-us/microsoft-365/roadmap
+  notes: Suite bureautique cloud
+
+- name: Entra ID
+  category: Identity
+  vendor: Microsoft
+  used_in_company: unknown
+  criticality: critical
+  owner: TBD
+  keywords:
+    - Entra ID
+    - Azure AD
+    - "Microsoft Entra"
+  rss_sources:
+    - https://www.microsoft.com/en-us/security/blog/rss/
+  pages_to_watch: []
+  notes: Identité cloud
+
+- name: Fortinet
+  category: Firewall
+  vendor: Fortinet
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Fortinet
+    - FortiGate
+    - FortiOS
+    - PSIRT
+  rss_sources:
+    - https://www.fortinet.com/blog/threat-research/rss
+  pages_to_watch:
+    - https://www.fortiguard.com/psirt
+  notes: Pare-feu entreprise
+
+- name: Cisco
+  category: Network
+  vendor: Cisco
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Cisco
+    - IOS
+    - IOS XE
+    - ASA
+    - Nexus
+  rss_sources:
+    - https://blog.talosintelligence.com/rss
+  pages_to_watch:
+    - https://tools.cisco.com/security/center/publicationsListing
+  notes: Équipements réseau
+
+- name: VMware
+  category: Virtualization
+  vendor: Broadcom/VMware
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - VMware
+    - ESXi
+    - vCenter
+    - vSphere
+  rss_sources:
+    - https://www.vmware.com/security/advisories/rss
+  pages_to_watch:
+    - https://support.broadcom.com/external/content/SecurityAdvisories
+  notes: Virtualisation
+
+- name: Veeam
+  category: Backup
+  vendor: Veeam
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Veeam
+    - Backup & Replication
+    - VBR
+  rss_sources:
+    - https://www.veeam.com/blog.xml
+  pages_to_watch:
+    - https://www.veeam.com/knowledge-base/security-advisories.html
+  notes: Solution de sauvegarde
+
+- name: Wazuh
+  category: Security
+  vendor: Wazuh
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - Wazuh
+    - OSSEC
+  rss_sources:
+    - https://wazuh.com/blog/feed/
+  pages_to_watch:
+    - https://wazuh.com/changelog/
+  notes: SIEM/EDR
+
+- name: ESET
+  category: Security
+  vendor: ESET
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - ESET
+    - Endpoint Security
+  rss_sources:
+    - https://www.welivesecurity.com/feed/
+  pages_to_watch: []
+  notes: Antivirus
+
+- name: Ubuntu
+  category: Operating System
+  vendor: Canonical
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Ubuntu
+    - USN
+    - Ubuntu Security Notice
+  rss_sources:
+    - https://ubuntu.com/security/notices/rss.xml
+  pages_to_watch:
+    - https://ubuntu.com/security/notices
+  notes: Serveurs Linux
+
+- name: Debian
+  category: Operating System
+  vendor: Debian
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Debian
+    - DSA
+    - Debian Security Advisory
+  rss_sources:
+    - https://www.debian.org/security/dsa-long
+  pages_to_watch:
+    - https://www.debian.org/security/
+  notes: Serveurs Linux
+
+- name: Red Hat
+  category: Operating System
+  vendor: Red Hat
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Red Hat
+    - RHEL
+    - RHSA
+  rss_sources:
+    - https://access.redhat.com/security/data/oval
+  pages_to_watch:
+    - https://access.redhat.com/security/
+  notes: Enterprise Linux
+
+- name: PostgreSQL
+  category: Database
+  vendor: PostgreSQL
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - PostgreSQL
+    - Postgres
+    - CVE
+  rss_sources:
+    - https://www.postgresql.org/about/news.rss
+  pages_to_watch:
+    - https://www.postgresql.org/support/security/
+  notes: Base de données relationnelle
+
+- name: SQL Server
+  category: Database
+  vendor: Microsoft
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - SQL Server
+    - MSSQL
+  rss_sources:
+    - https://www.microsoft.com/en-us/security/blog/rss/
+  pages_to_watch: []
+  notes: Base de données Microsoft
+
+- name: Apache
+  category: Web Server
+  vendor: Apache
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - Apache
+    - httpd
+    - Apache HTTP Server
+  rss_sources:
+    - https://httpd.apache.org/security/vulnerabilities_24.html
+  pages_to_watch:
+    - https://httpd.apache.org/security/
+  notes: Serveur web
+
+- name: Nginx
+  category: Web Server
+  vendor: Nginx
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - Nginx
+    - nginx
+  rss_sources:
+    - https://nginx.org/en/security_advisories.xml
+  pages_to_watch:
+    - https://nginx.org/en/security_advisories/
+  notes: Reverse proxy et serveur web
+
+- name: Docker
+  category: Containers
+  vendor: Docker
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Docker
+    - containerd
+    - runc
+  rss_sources:
+    - https://www.docker.com/blog/feed/
+  pages_to_watch:
+    - https://docs.docker.com/engine/release-notes/
+  notes: Conteneurisation
+
+- name: Kubernetes
+  category: Containers
+  vendor: CNCF
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - Kubernetes
+    - k8s
+  rss_sources:
+    - https://kubernetes.io/blog/index.xml
+  pages_to_watch:
+    - https://kubernetes.io/blog/security/
+  notes: Orchestration de conteneurs
+
+- name: GLPI
+  category: ITSM
+  vendor: GLPI
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - GLPI
+  rss_sources:
+    - https://blog.glpi-project.org/feed/
+  pages_to_watch:
+    - https://glpi-project.org/security/
+  notes: Gestion de parc
+
+- name: Grafana
+  category: Monitoring
+  vendor: Grafana
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - Grafana
+  rss_sources:
+    - https://grafana.com/blog/feed.xml
+  pages_to_watch:
+    - https://grafana.com/security/
+  notes: Visualisation et monitoring
+
+- name: OpenSearch
+  category: Search
+  vendor: AWS
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - OpenSearch
+  rss_sources:
+    - https://opensearch.org/blog/feed.xml
+  pages_to_watch:
+    - https://opensearch.org/security/
+  notes: Moteur de recherche
+
+- name: GitLab
+  category: DevOps
+  vendor: GitLab
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - GitLab
+  rss_sources:
+    - https://about.gitlab.com/atom.xml
+  pages_to_watch:
+    - https://about.gitlab.com/releases/categories/releases/
+  notes: Git et CI/CD
+
+- name: GitHub
+  category: DevOps
+  vendor: Microsoft
+  used_in_company: unknown
+  criticality: high
+  owner: TBD
+  keywords:
+    - GitHub
+  rss_sources:
+    - https://github.blog/feed/
+  pages_to_watch:
+    - https://github.com/about/security
+  notes: Git et hébergement de code
+
+- name: Python
+  category: Programming Language
+  vendor: Python
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - Python
+  rss_sources:
+    - https://blog.python.org/rss.xml
+  pages_to_watch:
+    - https://python.org/downloads/
+  notes: Langage de programmation
+
+- name: Java
+  category: Programming Language
+  vendor: Oracle
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - Java
+    - JDK
+  rss_sources:
+    - https://blogs.oracle.com/java/feed/
+  pages_to_watch:
+    - https://www.oracle.com/java/technologies/javase/cpu0/index.html
+  notes: Langage de programmation
+
+- name: Node.js
+  category: Programming Language
+  vendor: OpenJS
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - Node.js
+  rss_sources:
+    - https://nodejs.org/en/blog/feed/
+  pages_to_watch:
+    - https://nodejs.org/en/blog/
+  notes: Runtime JavaScript
+
+- name: PHP
+  category: Programming Language
+  vendor: PHP
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - PHP
+  rss_sources:
+    - https://www.php.net/feed.atom
+  pages_to_watch:
+    - https://www.php.net/ChangeLog-8.php
+  notes: Langage de programmation
+
+- name: PowerShell
+  category: Scripting
+  vendor: Microsoft
+  used_in_company: unknown
+  criticality: medium
+  owner: TBD
+  keywords:
+    - PowerShell
+  rss_sources:
+    - https://devblogs.microsoft.com/powershell/feed/
+  pages_to_watch:
+    - https://github.com/PowerShell/PowerShell/releases
+  notes: Automatisation Windows

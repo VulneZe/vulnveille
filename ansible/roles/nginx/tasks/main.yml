@@ -1,0 +1,102 @@
+---
+# Tâches du rôle nginx : installation et configuration de Nginx
+
+- name: Installer Nginx
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+
+- name: Créer le répertoire de configuration Nginx
+  ansible.builtin.file:
+    path: /etc/nginx/sites-available
+    state: directory
+    mode: '0755'
+
+- name: Créer le répertoire sites-enabled
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled
+    state: directory
+    mode: '0755'
+
+- name: Copier la configuration FreshRSS
+  ansible.builtin.template:
+    src: "{{ install_dir }}/config/nginx/freshrss.conf"
+    dest: /etc/nginx/sites-available/freshrss.conf
+    mode: '0644'
+  notify: reload nginx
+
+- name: Copier la configuration n8n
+  ansible.builtin.template:
+    src: "{{ install_dir }}/config/nginx/n8n.conf"
+    dest: /etc/nginx/sites-available/n8n.conf
+    mode: '0644'
+  notify: reload nginx
+
+- name: Copier la configuration changedetection
+  ansible.builtin.template:
+    src: "{{ install_dir }}/config/nginx/changedetection.conf"
+    dest: /etc/nginx/sites-available/changedetection.conf
+    mode: '0644'
+  notify: reload nginx
+
+- name: Copier la configuration Wallabag
+  ansible.builtin.template:
+    src: "{{ install_dir }}/config/nginx/wallabag.conf"
+    dest: /etc/nginx/sites-available/wallabag.conf
+    mode: '0644'
+  notify: reload nginx
+
+- name: Activer le site FreshRSS
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/freshrss.conf
+    dest: /etc/nginx/sites-enabled/freshrss.conf
+    state: link
+  notify: reload nginx
+
+- name: Activer le site n8n
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/n8n.conf
+    dest: /etc/nginx/sites-enabled/n8n.conf
+    state: link
+  notify: reload nginx
+
+- name: Activer le site changedetection
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/changedetection.conf
+    dest: /etc/nginx/sites-enabled/changedetection.conf
+    state: link
+  notify: reload nginx
+
+- name: Activer le site Wallabag
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/wallabag.conf
+    dest: /etc/nginx/sites-enabled/wallabag.conf
+    state: link
+  notify: reload nginx
+
+- name: Supprimer la configuration par défaut Nginx
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: reload nginx
+
+- name: Tester la configuration Nginx
+  ansible.builtin.command: nginx -t
+  register: nginx_test
+  changed_when: false
+
+- name: Afficher le résultat du test Nginx
+  ansible.builtin.debug:
+    var: nginx_test.stdout
+
+- name: Activer et démarrer Nginx
+  ansible.builtin.systemd:
+    name: nginx
+    enabled: yes
+    state: started
+
+handlers:
+  - name: reload nginx
+    ansible.builtin.systemd:
+      name: nginx
+      state: reloaded

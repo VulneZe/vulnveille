@@ -1,0 +1,48 @@
+# Docker Compose pour la production
+# Ce fichier restreint l'exposition des services et renforce la sécurité
+# Utiliser avec : docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+version: '3.8'
+
+services:
+  # PostgreSQL - Jamais exposé, accessible uniquement via le réseau Docker
+  postgres:
+    # Pas d'exposition de ports
+    # Déjà configuré dans docker-compose.yml sans exposition
+
+  # FreshRSS - Exposé uniquement sur localhost derrière Nginx
+  freshrss:
+    ports:
+      - "127.0.0.1:8081:80"  # Exposé uniquement sur localhost
+    # Nginx fera le reverse proxy vers 127.0.0.1:8081
+    # Ajouter des headers de sécurité dans Nginx
+
+  # n8n - Exposé uniquement sur localhost derrière Nginx
+  n8n:
+    ports:
+      - "127.0.0.1:5678:5678"  # Exposé uniquement sur localhost
+    # Nginx fera le reverse proxy vers 127.0.0.1:5678
+    # Ajouter des headers de sécurité dans Nginx
+    # IMPORTANT: Conserver l'authentification basic de n8n
+
+  # changedetection.io - Exposé uniquement sur localhost derrière Nginx
+  changedetection:
+    ports:
+      - "127.0.0.1:5000:5000"  # Exposé uniquement sur localhost
+    # Nginx fera le reverse proxy vers 127.0.0.1:5000
+    # Ajouter des headers de sécurité dans Nginx
+
+  # Wallabag - Exposé uniquement sur localhost derrière Nginx
+  wallabag:
+    ports:
+      - "127.0.0.1:8082:80"  # Exposé uniquement sur localhost
+    # Nginx fera le reverse proxy vers 127.0.0.1:8082
+    # Ajouter des headers de sécurité dans Nginx
+
+# Choix de sécurité pour la production :
+# - Tous les services écoutent uniquement sur 127.0.0.1
+# - Nginx (sur le même serveur) fait le reverse proxy
+# - PostgreSQL n'est jamais exposé
+# - Accès uniquement via Nginx avec headers de sécurité
+# - Configuration TLS interne recommandée dans Nginx
+# - Firewall pour limiter l'accès au port 80/443 de Nginx

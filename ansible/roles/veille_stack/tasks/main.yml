@@ -1,0 +1,71 @@
+---
+# Tâches du rôle veille_stack : déploiement de la stack Docker Compose
+
+- name: Copier les fichiers du projet
+  ansible.builtin.synchronize:
+    src: "{{ playbook_dir }}/../"
+    dest: "{{ install_dir }}/"
+    delete: yes
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=data/*"
+      - "--exclude=.env"
+      - "--exclude=ansible"
+
+- name: Corriger les permissions sur le répertoire d'installation
+  ansible.builtin.file:
+    path: "{{ install_dir }}"
+    owner: "{{ service_user }}"
+    group: "{{ service_group }}"
+    recurse: yes
+    mode: '0750'
+
+- name: Vérifier si le fichier .env existe
+  ansible.builtin.stat:
+    path: "{{ install_dir }}/.env"
+  register: env_file
+
+- name: Créer le fichier .env depuis .env.example si absent
+  ansible.builtin.copy:
+    src: "{{ install_dir }}/.env.example"
+    dest: "{{ install_dir }}/.env"
+    owner: "{{ service_user }}"
+    group: "{{ service_group }}"
+    mode: '0600'
+  when: not env_file.stat.exists
+
+- name: Générer des secrets si le fichier .env vient d'être créé
+  ansible.builtin.shell: |
+    openssl rand -base64 32 | tr -d "=+/" | cut -c1-32
+  register: postgres_password
+  when: not env_file.stat.exists
+  changed_when: false
+
+- name: Remplacer les secrets dans .env (POSTGRES_PASSWORD)
+  ansible.builtin.replace:
+    path: "{{ install_dir }}/.env"
+    regexp: 'CHANGEZ_CECI_MOT_DE_PASSE_FORT_POSTGRES'
+    replace: "{{ postgres_password.stdout }}"
+  when: not env_file.stat.exists
+
+- name: Démarrer la stack Docker Compose
+  ansible.builtin.docker_compose:
+    project_src: "{{ install_dir }}"
+    state: present
+  become_user: "{{ service_user }}"
+
+- name: Attendre que les services soient prêts
+  ansible.builtin.pause:
+    seconds: 30
+
+- name: Vérifier l'état des containers
+  ansible.builtin.command: docker compose ps
+  args:
+    chdir: "{{ install_dir }}"
+  register: compose_ps
+  become_user: "{{ service_user }}"
+  changed_when: false
+
+- name: Afficher l'état des containers
+  ansible.builtin.debug:
+    var: compose_ps.stdout

@@ -1,0 +1,25 @@
+---
+# Playbook Ansible pour l'installation de la plateforme de veille techno-cyber
+# Usage: ansible-playbook -i inventory.ini playbook.yml
+
+- name: Installation de la plateforme de veille techno-cyber
+  hosts: veille
+  become: yes
+  vars_files:
+    - group_vars/veille.yml
+
+  roles:
+    - role: base
+      tags: base
+
+    - role: docker
+      tags: docker
+
+    - role: veille_stack
+      tags: veille_stack
+
+    - role: nginx
+      tags: nginx
+
+    - role: hardening
+      tags: hardening

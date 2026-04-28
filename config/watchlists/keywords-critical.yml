@@ -1,0 +1,79 @@
+# Keywords Critical - Mots-clés pour les alertes critiques
+# Ces mots-clés déclenchent une priorité élevée dans les workflows n8n
+
+# Vulnérabilités critiques
+- critical
+- severe
+- exploit
+- exploited
+- "exploited in the wild"
+- "actively exploited"
+- "remote code execution"
+- RCE
+- "privilege escalation"
+- "authentication bypass"
+- "authorization bypass"
+- zero-day
+- 0day
+- ransomware
+- malware
+- backdoor
+- "security vulnerability"
+- "critical security"
+- "critical vulnerability"
+
+# Actions immédiates
+- "patch now"
+- "update immediately"
+- "emergency update"
+- "out-of-band"
+- "urgent"
+- "critical patch"
+- "security update"
+- "hotfix"
+
+# Scores de gravité
+- CVSS 9
+- CVSS 10
+- CVSS:9
+- CVSS:10
+- "CVSS 9.0"
+- "CVSS 10.0"
+- "score 9"
+- "score 10"
+- "severity critical"
+- "critical severity"
+
+# Listes officielles
+- KEV
+- CISA KEV
+- "Known Exploited Vulnerabilities"
+- "actively exploited vulnerability"
+- "exploited vulnerabilities catalog"
+
+# Mots-clés français
+- vulnérabilité critique
+- vulnérabilité sévère
+- exploitation active
+- correctif urgent
+- mise à jour urgente
+- exécution de code à distance
+- élévation de privilèges
+- contournement d'authentification
+- contournement d'autorisation
+- zero-day
+- jour zéro
+- rançongiciel
+- porte dérobée
+- correctif immédiat
+- mise à jour immédiate
+
+# Éditeurs critiques
+- Microsoft
+- Cisco
+- Fortinet
+- Palo Alto
+- VMware
+- Oracle
+- Adobe
+- SAP

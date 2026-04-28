@@ -1,0 +1,51 @@
+---
+# Variables pour le déploiement Ansible de la plateforme de veille techno-cyber
+# Copier ce fichier en veille.yml et ajuster les valeurs
+
+# ============================================================================
+# Configuration système
+# ============================================================================
+install_dir: /opt/veille-techno-cyber-interne
+service_user: veille
+service_group: veille
+
+# ============================================================================
+# Configuration Docker
+# ============================================================================
+docker_compose_project_name: veille-techno-cyber-interne
+
+# ============================================================================
+# Configuration des services
+# ============================================================================
+timezone: Europe/Paris
+internal_domain: veille.local
+
+freshrss_fqdn: freshrss.veille.local
+n8n_fqdn: n8n.veille.local
+changedetection_fqdn: changes.veille.local
+wallabag_fqdn: wallabag.veille.local
+
+# ============================================================================
+# Secrets (à générer ou fournir)
+# ============================================================================
+# postgres_password: "CHANGEZ_CECI"
+# n8n_basic_auth_password: "CHANGEZ_CECI"
+# n8n_encryption_key: "CHANGEZ_CECI_MIN_32_CARACTERES"
+# wallabag_secret: "CHANGEZ_CECI_MIN_32_CARACTERES"
+# wallabag_database_password: "CHANGEZ_CECI"
+# freshrss_admin_password: "CHANGEZ_CECI"
+
+# ============================================================================
+# Configuration Nginx
+# ============================================================================
+nginx_ssl_enabled: false
+# nginx_ssl_cert_path: /etc/ssl/certs/veille.local.crt
+# nginx_ssl_key_path: /etc/ssl/private/veille.local.key
+
+# ============================================================================
+# Configuration Firewall
+# ============================================================================
+firewall_enabled: true
+# allowed_ips:
+#   - "192.168.1.0/24"
+#   - "10.0.0.0/8"

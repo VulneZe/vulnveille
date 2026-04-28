@@ -1,0 +1,162 @@
+# Docker Compose principal pour la plateforme de veille techno-cyber
+# Ce fichier définit l'architecture de base avec tous les services
+# Utiliser docker-compose.prod.yml pour la production
+# Utiliser docker-compose.override.yml pour le développement local
+
+version: '3.8'
+
+services:
+  # PostgreSQL - Base de données partagée
+  postgres:
+    image: postgres:16-alpine
+    container_name: veille_postgres
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-veille}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-veille}
+      TZ: ${TZ:-Europe/Paris}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    networks:
+      - veille_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-veille}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # PostgreSQL n'est pas exposé, accessible uniquement via le réseau Docker
+
+  # FreshRSS - Agrégateur RSS
+  freshrss:
+    image: freshrss/freshrss:latest
+    container_name: veille_freshrss
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      TZ: ${TZ:-Europe/Paris}
+      CRON_MINUTE: '*/15'  # Mise à jour tous les 15 minutes
+    volumes:
+      - ./data/freshrss:/var/www/FreshRSS/data
+      - ./data/freshrss/extensions:/var/www/FreshRSS/extensions
+    networks:
+      - veille_net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    # Port exposé uniquement pour le développement
+    # En production, utiliser docker-compose.prod.yml pour restreindre l'exposition
+
+  # n8n - Automatisation des workflows
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: veille_n8n
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      TZ: ${TZ:-Europe/Paris}
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: ${N8N_PORT:-5678}
+      N8N_PROTOCOL: ${N8N_PROTOCOL:-http}
+      N8N_EDITOR_BASE_URL: ${N8N_EDITOR_BASE_URL:-http://localhost:5678}
+      WEBHOOK_URL: ${WEBHOOK_URL:-http://localhost:5678/}
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD}
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB_N8N:-n8n}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER:-veille}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      NODE_ENV: production
+      EXECUTIONS_MODE: regular
+    volumes:
+      - ./data/n8n:/home/node/.n8n
+    networks:
+      - veille_net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5678/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    # Port exposé uniquement pour le développement
+    # En production, utiliser docker-compose.prod.yml pour restreindre l'exposition
+
+  # changedetection.io - Surveillance de pages web
+  changedetection:
+    image: ghcr.io/dgtlmoon/changedetection.io:latest
+    container_name: veille_changedetection
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      TZ: ${TZ:-Europe/Paris}
+      PAGETELEGRAM_NOTIFICATION_URL: ${PAGETELEGRAM_NOTIFICATION_URL:-}
+      PLAYWRIGHT_DRIVER_URL: ${PLAYWRIGHT_DRIVER_URL:-}
+    volumes:
+      - ./data/changedetection:/appdata
+    networks:
+      - veille_net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    # Port exposé uniquement pour le développement
+    # En production, utiliser docker-compose.prod.yml pour restreindre l'exposition
+
+  # Wallabag - Sauvegarde et annotation d'articles
+  wallabag:
+    image: wallabag/wallabag:latest
+    container_name: veille_wallabag
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      TZ: ${TZ:-Europe/Paris}
+      SYMFONY__ENV__DOMAIN_NAME: ${WALLABAG_FQDN:-wallabag.veille.local}
+      SYMFONY__ENV__SERVER_NAME: "My Wallabag"
+      SYMFONY__ENV__DATABASE_DRIVER: pdo_pgsql
+      SYMFONY__ENV__DATABASE_HOST: postgres
+      SYMFONY__ENV__DATABASE_PORT: 5432
+      SYMFONY__ENV__DATABASE_NAME: ${POSTGRES_DB_WALLABAG:-wallabag}
+      SYMFONY__ENV__DATABASE_USER: ${WALLABAG_DATABASE_USER:-wallabag}
+      SYMFONY__ENV__DATABASE_PASSWORD: ${WALLABAG_DATABASE_PASSWORD}
+      SYMFONY__ENV__DATABASE_PREFIX: wallabag_
+      SYMFONY__ENV__MAILER_DSN: ${WALLABAG_MAILER_DSN:-smtp://localhost:25}
+      SYMFONY__ENV__FROM_EMAIL: ${WALLABAG_FROM_EMAIL:-wallabag@veille.local}
+      SYMFONY__ENV__SECRET: ${WALLABAG_SECRET}
+    volumes:
+      - ./data/wallabag:/var/www/wallabag/data
+    networks:
+      - veille_net
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    # Port exposé uniquement pour le développement
+    # En production, utiliser docker-compose.prod.yml pour restreindre l'exposition
+
+networks:
+  veille_net:
+    driver: bridge
+    name: veille_net
+    # Réseau interne pour la communication entre services

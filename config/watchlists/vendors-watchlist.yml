@@ -1,0 +1,212 @@
+# Vendors Watchlist - Liste des éditeurs à surveiller
+# Ce fichier contient la liste des éditeurs pour la veille produit et sécurité
+
+- name: Microsoft
+  category: Technology
+  products:
+    - Windows Server
+    - Active Directory
+    - Microsoft 365
+    - Entra ID
+    - SQL Server
+    - Azure
+    - GitHub
+  rss_sources:
+    - https://www.microsoft.com/en-us/security/blog/rss/
+    - https://techcommunity.microsoft.com/t5/microsoft-azure-blog/bg-p/AzureBlog
+    - https://github.blog/feed/
+  pages_to_watch:
+    - https://www.microsoft.com/en-us/security/
+    - https://www.microsoft.com/en-us/microsoft-365/roadmap
+  notes: Éditeur majeur, nombreuses vulnérabilités critiques
+
+- name: Fortinet
+  category: Security
+  products:
+    - FortiGate
+    - FortiOS
+    - FortiManager
+  rss_sources:
+    - https://www.fortinet.com/blog/threat-research/rss
+  pages_to_watch:
+    - https://www.fortiguard.com/psirt
+  notes: Pare-feu entreprise
+
+- name: Cisco
+  category: Network
+  products:
+    - IOS
+    - IOS XE
+    - ASA
+    - Nexus
+  rss_sources:
+    - https://blog.talosintelligence.com/rss
+  pages_to_watch:
+    - https://tools.cisco.com/security/center/publicationsListing
+  notes: Équipements réseau
+
+- name: Palo Alto
+  category: Security
+  products:
+    - PAN-OS
+    - Prisma
+  rss_sources:
+    - https://securityadvisories.paloaltonetworks.com/feed
+  pages_to_watch:
+    - https://securityadvisories.paloaltonetworks.com/
+  notes: Pare-feu nouvelle génération
+
+- name: Broadcom VMware
+  category: Virtualization
+  products:
+    - ESXi
+    - vCenter
+    - vSphere
+  rss_sources:
+    - https://www.vmware.com/security/advisories/rss
+  pages_to_watch:
+    - https://support.broadcom.com/external/content/SecurityAdvisories
+  notes: Virtualisation
+
+- name: Veeam
+  category: Backup
+  products:
+    - Backup & Replication
+    - Veeam ONE
+  rss_sources:
+    - https://www.veeam.com/blog.xml
+  pages_to_watch:
+    - https://www.veeam.com/knowledge-base/security-advisories.html
+  notes: Sauvegarde
+
+- name: Wazuh
+  category: Security
+  products:
+    - Wazuh
+    - Wazuh Server
+  rss_sources:
+    - https://wazuh.com/blog/feed/
+  pages_to_watch:
+    - https://wazuh.com/changelog/
+  notes: SIEM/EDR open source
+
+- name: Elastic
+  category: Search
+  products:
+    - Elasticsearch
+    - Kibana
+    - Logstash
+  rss_sources:
+    - https://www.elastic.co/blog/feed
+  pages_to_watch:
+    - https://www.elastic.co/guide/en/elasticsearch/reference/current/release-notes.html
+  notes: Stack ELK
+
+- name: Canonical
+  category: Operating System
+  products:
+    - Ubuntu
+    - Ubuntu LTS
+  rss_sources:
+    - https://ubuntu.com/security/notices/rss.xml
+  pages_to_watch:
+    - https://ubuntu.com/security/notices
+  notes: Distribution Linux
+
+- name: Debian
+  category: Operating System
+  products:
+    - Debian
+    - Debian Stable
+  rss_sources:
+    - https://www.debian.org/security/dsa-long
+  pages_to_watch:
+    - https://www.debian.org/security/
+  notes: Distribution Linux
+
+- name: Red Hat
+  category: Operating System
+  products:
+    - RHEL
+    - CentOS Stream
+  rss_sources:
+    - https://access.redhat.com/security/data/oval
+  pages_to_watch:
+    - https://access.redhat.com/security/
+  notes: Enterprise Linux
+
+- name: PostgreSQL
+  category: Database
+  products:
+    - PostgreSQL
+  rss_sources:
+    - https://www.postgresql.org/about/news.rss
+  pages_to_watch:
+    - https://www.postgresql.org/support/security/
+  notes: Base de données open source
+
+- name: Docker
+  category: Containers
+  products:
+    - Docker Engine
+    - Docker Desktop
+  rss_sources:
+    - https://www.docker.com/blog/feed/
+  pages_to_watch:
+    - https://docs.docker.com/engine/release-notes/
+  notes: Conteneurisation
+
+- name: Kubernetes
+  category: Containers
+  products:
+    - Kubernetes
+  rss_sources:
+    - https://kubernetes.io/blog/index.xml
+  pages_to_watch:
+    - https://kubernetes.io/blog/security/
+  notes: Orchestration de conteneurs
+
+- name: Grafana
+  category: Monitoring
+  products:
+    - Grafana
+    - Loki
+    - Tempo
+  rss_sources:
+    - https://grafana.com/blog/feed.xml
+  pages_to_watch:
+    - https://grafana.com/security/
+  notes: Monitoring et observabilité
+
+- name: OpenSearch
+  category: Search
+  products:
+    - OpenSearch
+    - OpenSearch Dashboards
+  rss_sources:
+    - https://opensearch.org/blog/feed.xml
+  pages_to_watch:
+    - https://opensearch.org/security/
+  notes: Moteur de recherche
+
+- name: GitLab
+  category: DevOps
+  products:
+    - GitLab CE
+    - GitLab EE
+  rss_sources:
+    - https://about.gitlab.com/atom.xml
+  pages_to_watch:
+    - https://about.gitlab.com/releases/categories/releases/
+  notes: Git et CI/CD
+
+- name: GitHub
+  category: DevOps
+  products:
+    - GitHub
+    - GitHub Enterprise
+  rss_sources:
+    - https://github.blog/feed/
+  pages_to_watch:
+    - https://github.com/about/security
+  notes: Git et hébergement de code

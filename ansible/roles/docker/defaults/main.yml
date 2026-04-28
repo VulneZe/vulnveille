@@ -1,0 +1,4 @@
+---
+# Variables par défaut pour le rôle docker
+
+service_user: veille
